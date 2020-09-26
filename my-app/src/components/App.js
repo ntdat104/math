@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import '../css/App.css';
-import { data } from "../firebaseConfig";
 import Admin from './Admin';
 import Login from './Login';
 import User from './User';
+import { config } from "../firebaseConfig";
+import * as firebase from "firebase";
 
 class App extends Component {
   constructor(props) {
@@ -13,6 +14,8 @@ class App extends Component {
     }
   }
   UNSAFE_componentWillMount(){
+    console.log(config);
+    const data = firebase.database().ref("students");
     data.on("value", (data) => {
       let students = [];
       data.forEach((student) => {
@@ -26,7 +29,6 @@ class App extends Component {
           gender: student.val().gender,
         })
       });
-
       this.setState({
         students: students
       });
@@ -39,11 +41,14 @@ class App extends Component {
         return <Login getDataFromLogin={(account) => this.getDataFromLogin(account)} />
       case "ADMIN":
         if(this.state.students) {
-          return <Admin students={this.state.students} />
+          return <Admin students={this.state.students} studentEditing={this.state.studentEditing} editStudent={(student) => this.editStudent(student)} addNewStudent={(student) => this.addNewStudent(student)} removeStudent={(student) => this.removeStudent(student)}/>
         }
         break
       case "USER":
-        return <User />
+        if(this.state.students) {
+          return <User />
+        }
+        break
       default:
         break
     }
@@ -75,24 +80,25 @@ class App extends Component {
         key: account.username
       });
     }
-    console.log(user);
   }
 
-  getData(){
-    if(this.state.students.length !== 0){
-      let mapData = this.state.students.map((value, key) => {
-        return (
-          <ul key={key}>
-            <li>{value.username}</li>
-            <li>{value.password}</li>
-            <li>{value.name}</li>
-            <li>{value.age}</li>
-            <li>{value.gender}</li>
-          </ul>
-        )
-      })
-      return mapData
-    }
+  editStudent(student){
+    this.setState({
+      studentEditing: student
+    });
+    console.log(student)
+  }
+
+  addNewStudent(student){
+    const data = firebase.database().ref("students/" + student.username);
+    data.set(student);
+    console.log(student);
+  }
+
+  removeStudent(student){
+    const data = firebase.database().ref("students");
+    data.child(student.username).remove();
+    console.log(student);
   }
 
   render() {

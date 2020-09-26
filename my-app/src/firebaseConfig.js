@@ -10,6 +10,5 @@ const Config = {
   appId: "1:26150205556:web:da9c7bef6ff418c697b921",
   measurementId: "G-RBVTEECYN0",
 };
-firebase.initializeApp(Config);
 
-export const data = firebase.database().ref("students");
+export const config = firebase.initializeApp(Config);
