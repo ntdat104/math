@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
 
-class Row extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        hello: "a"
-      }
-    }
+class AdminRowStudent extends Component {
     checkGender() {
-      if(this.props.student.gender === 0){
-        return <td>Nam</td>
-      }
-      return <td>Nữ</td>
+        if(this.props.student.gender === 0){
+            return <td>Nam</td>
+        }
+        return <td>Nữ</td>
     }
     render() {
         return (
             <tr>
-                <td>{this.props.stt + 1}</td>
+                <td>{this.props.stt}</td>
                 <td>{this.props.student.username}</td>
                 <td>{this.props.student.password}</td>
                 <td>{this.props.student.fullname}</td>
@@ -25,7 +19,8 @@ class Row extends Component {
                 <td>{this.props.student.mark}</td>
                 {this.checkGender()}
                 <td>
-                    <button onClick={() => this.props.editStudent()}>Sửa</button>
+                    <button onClick={() => this.props.addStudent()}>Thêm</button>
+                    <button onClick={() => this.props.getEditStudent()}>Sửa</button>
                     <button onClick={() => this.props.removeStudent()}>Xóa</button>
                 </td>
             </tr>
@@ -33,4 +28,4 @@ class Row extends Component {
     }
 }
 
-export default Row;
+export default AdminRowStudent;

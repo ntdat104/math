@@ -3,7 +3,7 @@ import '../css/App.css';
 import Admin from './Admin';
 import Login from './Login';
 import User from './User';
-import { config } from "../firebaseConfig";
+import { firebaseConfig } from "../firebaseConfig";
 import * as firebase from "firebase";
 
 class App extends Component {
@@ -14,7 +14,7 @@ class App extends Component {
     }
   }
   UNSAFE_componentWillMount(){
-    console.log(config);
+    console.log(firebaseConfig);
     const data = firebase.database().ref("students");
     data.on("value", (data) => {
       let students = [];
@@ -41,7 +41,12 @@ class App extends Component {
         return <Login getDataFromLogin={(account) => this.getDataFromLogin(account)} />
       case "ADMIN":
         if(this.state.students) {
-          return <Admin students={this.state.students} studentEditing={this.state.studentEditing} editStudent={(student) => this.editStudent(student)} addNewStudent={(student) => this.addNewStudent(student)} removeStudent={(student) => this.removeStudent(student)}/>
+          return <Admin
+                      students={this.state.students}
+                      editStudent={(student) => this.editStudent(student)}
+                      addStudent={(student) => this.addStudent(student)}
+                      removeStudent={(student) => this.removeStudent(student)}
+                  />
         }
         break
       case "USER":
@@ -83,13 +88,10 @@ class App extends Component {
   }
 
   editStudent(student){
-    this.setState({
-      studentEditing: student
-    });
     console.log(student)
   }
 
-  addNewStudent(student){
+  addStudent(student){
     const data = firebase.database().ref("students/" + student.username);
     data.set(student);
     console.log(student);
