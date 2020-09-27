@@ -23,11 +23,11 @@ class Admin extends Component {
                         status: "ADDSTUDENT"
                     });
                 }}
-                editStudent={() => {
+                getEditStudent={() => {
                     this.setState({
-                        studentEditing: student
+                        status: "EDITSTUDENT"
                     });
-                    this.props.editStudent(student)
+                    this.props.getEditStudent(student)
                 }}
                 removeStudent={() => this.props.removeStudent(student)}
             />
@@ -45,10 +45,7 @@ class Admin extends Component {
             case "ADDSTUDENT":
                 return <AdminAddStudentForm addStudent={(student) => this.props.addStudent(student)}/>
             case "EDITSTUDENT":
-                if(this.state.studentEditing) {
-                    return <AdminEditStudentForm studentEditing={this.state.studentEditing}/>
-                }
-                break
+                return <AdminEditStudentForm editStudent={this.props.editStudent}/>
             default:
                 break;
         }

@@ -4,13 +4,13 @@ class AdminEditStudentForm extends Component {
     constructor(props) {
         super(props);
         this.setState({
-            username: this.props.studentEditing.username,
-            password: this.props.studentEditing.password,
-            fullname: this.props.studentEditing.fullname,
-            grade: this.props.studentEditing.grade,
-            count: this.props.studentEditing.count,
-            mark: this.props.studentEditing.mark,
-            gender: this.props.studentEditing.gender
+            username: this.props.editStudent.username,
+            password: this.props.editStudent.password,
+            fullname: this.props.editStudent.fullname,
+            grade: this.props.editStudent.grade,
+            count: this.props.editStudent.count,
+            mark: this.props.editStudent.mark,
+            gender: this.props.editStudent.gender
         });
     }
     

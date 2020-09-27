@@ -10,7 +10,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      status: "ADMIN"
+      permission: "ADMIN",
+      editStudent: {}
     }
   }
   UNSAFE_componentWillMount(){
@@ -35,15 +36,16 @@ class App extends Component {
     })
   }
 
-  checkStatus(){
-    switch (this.state.status) {
+  checkPermission(){
+    switch (this.state.permission) {
       case "LOGIN":
         return <Login getDataFromLogin={(account) => this.getDataFromLogin(account)} />
       case "ADMIN":
         if(this.state.students) {
           return <Admin
                       students={this.state.students}
-                      editStudent={(student) => this.editStudent(student)}
+                      editStudent={this.state.editStudent}
+                      getEditStudent={(student) => this.getEditStudent(student)}
                       addStudent={(student) => this.addStudent(student)}
                       removeStudent={(student) => this.removeStudent(student)}
                   />
@@ -57,6 +59,10 @@ class App extends Component {
       default:
         break
     }
+  }
+
+  checkStatus(){
+    if(this.state.status) return this.state.status
   }
 
   getDataFromLogin(account){
@@ -75,19 +81,22 @@ class App extends Component {
     if(user.username === "admin"){
       alert("Đăng nhập quyền admin thành công.");
       this.setState({
-        status: "ADMIN",
+        permission: "ADMIN",
         key: account.username
       });
     } else {
       alert("Đăng nhập quyền user thành công.");
       this.setState({
-        status: "USER",
+        permission: "USER",
         key: account.username
       });
     }
   }
 
-  editStudent(student){
+  getEditStudent(student){
+    this.setState({
+      editStudent: student
+    });
     console.log(student)
   }
 
@@ -106,7 +115,7 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        {this.checkStatus()}
+        {this.checkPermission()}
       </div>
     );
   }
