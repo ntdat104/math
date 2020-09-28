@@ -1,49 +1,49 @@
-.admin_addform{
+.admin_editform{
     width: 30rem;
     padding: 2rem;
-    border: 1px solid red;
+    border: 1px solid royalblue;
     border-radius: 0.5rem;
 }
 
-.admin_addform h1{
+.admin_editform h1{
     font-size: 2.4rem;
-    color: red;
+    color: royalblue;
     user-select: none;
 }
 
-.admin_addform div{
+.admin_editform div{
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
 }
 
-.admin_addform div label{
+.admin_editform div label{
     font-size: 1.4rem;
-    color: red;
+    color: royalblue;
     display: inline-block;
     width: 8rem;
     user-select: none;
 }
 
-.admin_addform div input, .admin_addform div select{
+.admin_editform div input, .admin_editform div select{
     flex-grow: 1;
     padding: 0.2rem 0rem 0.2rem 0.5rem;
     outline: none;
-    border: 1px solid red;
+    border: 1px solid royalblue;
     border-radius: 0.2rem;
 }
 
-.admin_addform div:last-child{
+.admin_editform div:last-child{
     display: flex;
     justify-content: center;
     margin-top: 2rem;
 }
 
-.admin_addform div button{
+.admin_editform div button{
     padding: 0.5rem 1rem;
     margin-right: 1rem;
 }
 
-.admin_addform div button:last-child{
+.admin_editform div button:last-child{
     margin-right: 0;
 }

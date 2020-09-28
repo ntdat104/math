@@ -17,17 +17,17 @@ class AdminAddStudentForm extends Component {
             username: this.state.username.toLowerCase(),
             password: this.state.password.toLowerCase(),
             fullname: this.state.fullname,
-            grade: this.state.grade,
+            gender: parseInt(this.state.gender),
+            class: this.state.class,
             count: this.state.count,
-            mark: this.state.mark,
-            gender: parseInt(this.state.gender)
+            mark: this.state.mark
         };
         this.props.addStudent(student);
     }
     
     render() {
         return (
-            <form className="admin_form" onSubmit={(e) => this.handleSubmit(e)}>
+            <form className="admin_addform" onSubmit={(e) => this.handleSubmit(e)}>
                 <h1>Thêm học sinh</h1>
                 <div className="admin_form_group">
                     <label htmlFor="username">Username</label>
@@ -42,8 +42,8 @@ class AdminAddStudentForm extends Component {
                     <input name="fullname" id="fullname" type="text" onChange={(e) => this.handleChange(e)} required/>
                 </div>
                 <div className="admin_form_group">
-                    <label htmlFor="grade">Lớp</label>
-                    <input name="grade" id="grade" type="text" onChange={(e) => this.handleChange(e)} required/>
+                    <label htmlFor="class">Lớp</label>
+                    <input name="class" id="class" type="text" onChange={(e) => this.handleChange(e)} required/>
                 </div>
                 <div className="admin_form_group">
                     <label htmlFor="count">Số buổi học</label>

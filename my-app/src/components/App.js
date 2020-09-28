@@ -11,11 +11,12 @@ class App extends Component {
     super(props);
     this.state = {
       permission: "ADMIN",
-      editStudent: {}
+      status: "DEFAULT",
+      firebaseConfig: firebaseConfig
     }
   }
+
   UNSAFE_componentWillMount(){
-    console.log(firebaseConfig);
     const data = firebase.database().ref("students");
     data.on("value", (data) => {
       let students = [];
@@ -24,10 +25,10 @@ class App extends Component {
           username: student.key,
           password: student.val().password,
           fullname: student.val().fullname,
-          grade: student.val().grade,
+          gender: parseInt(student.val().gender),
+          class: student.val().class,
           count: student.val().count,
           mark: student.val().mark,
-          gender: student.val().gender,
         })
       });
       this.setState({
@@ -38,31 +39,26 @@ class App extends Component {
 
   checkPermission(){
     switch (this.state.permission) {
-      case "LOGIN":
-        return <Login getDataFromLogin={(account) => this.getDataFromLogin(account)} />
+      case "UNLOGIN":
+        if(this.state.students) {
+          return <Login getDataFromLogin={(account) => this.getDataFromLogin(account)}/>
+        } else break
       case "ADMIN":
         if(this.state.students) {
           return <Admin
-                      students={this.state.students}
-                      editStudent={this.state.editStudent}
-                      getEditStudent={(student) => this.getEditStudent(student)}
+                      appState={this.state}
+                      turnOnEditStudentStatus={(student) => this.turnOnEditStudentStatus(student)}
+                      turnOnAddStudentStatus={() => this.turnOnAddStudentStatus()}
                       addStudent={(student) => this.addStudent(student)}
+                      editStudent={(student) => this.editStudent(student)}
                       removeStudent={(student) => this.removeStudent(student)}
                   />
-        }
-        break
+        } else break
       case "USER":
-        if(this.state.students) {
-          return <User />
-        }
-        break
+          return <User appState={this.state}/>
       default:
         break
     }
-  }
-
-  checkStatus(){
-    if(this.state.status) return this.state.status
   }
 
   getDataFromLogin(account){
@@ -79,37 +75,63 @@ class App extends Component {
       return alert("Sai mật khẩu.");
     }
     if(user.username === "admin"){
-      alert("Đăng nhập quyền admin thành công.");
+      alert("Đăng nhập quyền admin thành công!"); 
       this.setState({
         permission: "ADMIN",
-        key: account.username
       });
     } else {
-      alert("Đăng nhập quyền user thành công.");
+      alert("Đăng nhập thành công!");
       this.setState({
         permission: "USER",
-        key: account.username
+        user: user
       });
     }
   }
 
-  getEditStudent(student){
-    this.setState({
-      editStudent: student
-    });
-    console.log(student)
+  turnOnAddStudentStatus(){
+    if(this.state.status === "ADD"){
+      this.setState({
+        status: "DEFAULT"
+      });
+    } else {
+      this.setState({
+        status: "ADD",
+      });
+    }
+  }
+
+  turnOnEditStudentStatus(student){
+    if(this.state.status === "EDIT"){
+      this.setState({
+        status: "DEFAULT"
+      });
+    } else {
+      this.setState({
+        status: "EDIT",
+        studentEditing: student
+      });
+    }
   }
 
   addStudent(student){
     const data = firebase.database().ref("students/" + student.username);
     data.set(student);
-    console.log(student);
+    this.setState({
+      status: "DEFAULT"
+    });
+  }
+
+  editStudent(student){
+    const data = firebase.database().ref("students/" + student.username);
+    data.set(student);
+    this.setState({
+      status: "DEFAULT"
+    });
   }
 
   removeStudent(student){
     const data = firebase.database().ref("students");
     data.child(student.username).remove();
-    console.log(student);
   }
 
   render() {
