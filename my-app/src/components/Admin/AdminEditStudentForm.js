@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import "../css/AdminEditStudentForm.css";
+import "./AdminEditStudentForm.css";
 
 class AdminEditStudentForm extends Component {
     handleChange(e) {

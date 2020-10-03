@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import "../css/AdminAddStudentForm.css";
+import "./AdminAddStudentForm.css";
 
 class AdminAddStudentForm extends Component {
     handleChange(e) {
         const target = e.target;
         const value = target.type === "checkbox" ? target.checked : target.value;
         const name = target.name;
-    this.setState({
-        [name]: value,
-    });
+        this.setState({
+            [name]: value,
+        });
     }
 
     handleSubmit(e) {

@@ -1,0 +1,21 @@
+.admin-search{
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-search label{
+    margin-right: 0.5rem;
+    font-size: 1.4rem;
+    user-select: none;
+}
+
+.admin-search input{
+    margin-right: 0.5rem;
+    outline: none;
+}
+
+.admin-search button{
+    padding: 0rem 1rem;
+}

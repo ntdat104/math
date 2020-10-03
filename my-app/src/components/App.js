@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../css/App.css';
-import Admin from './Admin';
+import Admin from './Admin/Admin';
 import Login from './Login';
 import User from './User';
 import { firebaseConfig } from "../firebaseConfig";
@@ -12,7 +12,13 @@ class App extends Component {
     this.state = {
       permission: "ADMIN",
       status: "DEFAULT",
-      firebaseConfig: firebaseConfig
+      firebaseConfig: firebaseConfig,
+
+      admin: {
+        searchStatus: false,
+        addStatus: false,
+        editStatus: false
+      }
     }
   }
 
@@ -37,6 +43,25 @@ class App extends Component {
     })
   }
 
+  //* Admin
+  getStudentSearch(username){
+    if(username !== ""){
+      let listStudent = this.state.students.filter((student) => student.username.indexOf(username) !== -1);
+        this.setState({
+          admin: {
+            searchStatus: true,
+            listStudent: listStudent
+          }
+      })
+    } else {
+      this.setState({
+        admin: {
+          searchStatus: false
+        }
+      });
+    }
+  }
+
   checkPermission(){
     switch (this.state.permission) {
       case "UNLOGIN":
@@ -52,6 +77,8 @@ class App extends Component {
                       addStudent={(student) => this.addStudent(student)}
                       editStudent={(student) => this.editStudent(student)}
                       removeStudent={(student) => this.removeStudent(student)}
+
+                      getStudentSearch={(username) => this.getStudentSearch(username)}
                   />
         } else break
       case "USER":

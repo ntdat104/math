@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import "./RowStudent.css";
 
-class AdminRowStudent extends Component {
+class RowStudent extends Component {
     render() {
         return (
             <tr>
@@ -13,7 +14,6 @@ class AdminRowStudent extends Component {
                 <td>{this.props.student.count}</td>
                 <td>{this.props.student.mark}</td>
                 <td>
-                    <button onClick={() => this.props.turnOnAddStudentStatus()}>Thêm</button>
                     <button onClick={() => this.props.turnOnEditStudentStatus()}>Sửa</button>
                     <button onClick={() => this.props.removeStudent()}>Xóa</button>
                 </td>
@@ -22,4 +22,4 @@ class AdminRowStudent extends Component {
     }
 }
 
-export default AdminRowStudent;
+export default RowStudent;
